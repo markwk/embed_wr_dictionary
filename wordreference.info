@@ -1,0 +1,4 @@
+name = "WordReference.com dictionary"
+description = "Embedded wordreference.com dictionary" 
+core = 6.x  
+package = "Other"

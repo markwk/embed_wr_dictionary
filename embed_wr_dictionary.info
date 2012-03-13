@@ -1,5 +1,0 @@
-name = "Embedded WR dictionary"
-description = "Embedded wordreference dictionary" 
-core = 6.x  
-package = "Custom"
-version = "6.x-1.0" 

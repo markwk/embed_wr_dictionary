@@ -2,13 +2,13 @@
 /**
  * Implement hook_menu().
  */
-function embed_wr_dictionary_menu() {
+function wordreference_menu() {
   $items = array();
-  $items['admin/settings/wr-dictionary'] = array(
-    'title' => t('Embededded Dictionary'),
-    'description' => t('Settings for embedded wordreference dictionary.'),
+  $items['admin/settings/wordreference'] = array(
+    'title' => t('WordReference.com Embededded Dictionary'),
+    'description' => t('Settings for wordreference dictionary.'),
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('embed_wr_dictionary_settings_form'),
+    'page arguments' => array('wordreference_settings_form'),
     'access callback' => 'user_access',
     'access arguments' => array('administer site configuration'),
     'type' => MENU_NORMAL_ITEM,
@@ -20,7 +20,7 @@ function embed_wr_dictionary_menu() {
 * 
 * @param mixed $form_state
 */
-function embed_wr_dictionary_settings_form($form_state=array()) {
+function wordreference_settings_form($form_state=array()) {
   $dict_options = array(
     "enzh" => "English<>Chinese", 
     "enes" => "English<>Spanish",
@@ -37,6 +37,7 @@ function embed_wr_dictionary_settings_form($form_state=array()) {
     "enko" => "English<>Korean",
     "encz" => "English<>Czech",
     "entr" => "English<>Turkish",
+    "enar" => "English<>Arabic",
   );
   $form['wr_default_dictionary'] = array(
     '#title' => t('Select default dictionary'),
@@ -59,7 +60,7 @@ function embed_wr_dictionary_settings_form($form_state=array()) {
 * @param mixed $delta
 * @param mixed $edit
 */
-function embed_wr_dictionary_block($op = 'list', $delta = 0, $edit = array()) {
+function wordreference_block($op = 'list', $delta = 0, $edit = array()) {
   if ($op == 'list') {
     $blocks[0] = array(
       'info' => t('Dictionary'), 
@@ -72,16 +73,16 @@ function embed_wr_dictionary_block($op = 'list', $delta = 0, $edit = array()) {
       case 0:
         $block = array(
           'subject' => t('Dictionary'), 
-          'content' => embed_wr_dictionary_viewblock(),
+          'content' => wordreference_viewblock(),
         );
         break;
     }
     return $block;
   }
 }
-function embed_wr_dictionary_viewblock() {
-  drupal_add_js(drupal_get_path('module', 'embed_wr_dictionary') .'/js/embed_wr_dictionary.js'); 
+function wordreference_viewblock() {
+  drupal_add_js(drupal_get_path('module', 'wordreference') .'/js/wordreference.js'); 
   $dictionary = variable_get('wr_default_dictionary', 'enzh');
   $userid = variable_get('wr_userid', 1);
-  return theme_render_template(drupal_get_path('module', 'embed_wr_dictionary') . '/templates/dictionary_block.tpl.php', array('dictionary' => $dictionary, 'userid' => $userid));
+  return theme_render_template(drupal_get_path('module', 'wordreference') . '/templates/dictionary_block.tpl.php', array('dictionary' => $dictionary, 'userid' => $userid));
 }
